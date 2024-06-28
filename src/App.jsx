@@ -1,34 +1,20 @@
 import { generateDisplay } from "./components/generateDisplay";
 import React from "react";
 import { randomWord } from "./components/randomWord";
+import { playerWon } from "./components/playerWon";
 
 function App() {
     const [guessedLetters, setGuessedLetters] = React.useState([]);
     const [numberOfMisses, setNumberOfMisses] = React.useState(0)
     const [answer, setAnswer] = React.useState(randomWord())
-    // const [gameInProgress, setGameInProgress] = React.useState(true)
 
     const numberOfLives = 10
-
-    function playerWon(guessedLetters, answer){
-        for(let letter of answer){
-            if (!guessedLetters.includes(letter)){
-                return false
-            }}
-            // setGameInProgress(false)
-            return true
-    }
-
-    // if(numberOfMisses === numberOfLives){
-    //     setGameInProgress(false)
-    // }
-
     const alphabetArray = 'abcdefghijklmnopqrstuvwxyz'.split('')
+
     const buttons = alphabetArray.map((letter) => {
         return(<button key={letter}
         disabled={guessedLetters.includes(letter) || numberOfMisses === numberOfLives || playerWon(guessedLetters, answer)}
         onClick={()=>{
-
             setGuessedLetters((prevArray) => [...prevArray, letter])
             if(!answer.includes(letter)){
                 setNumberOfMisses((prevValue) => prevValue + 1)
@@ -45,7 +31,7 @@ function App() {
             <h2>{playerWon(guessedLetters, answer) ? "You're a Winner Baby!": null}</h2>
             <h2>{numberOfMisses === numberOfLives ? `You lose,the answer was ${answer}.`: null}</h2>
             <h4>Number of misses: {numberOfMisses}</h4>
-            <div className="letters">
+            <div >
                 {buttons}
             </div>
             <button disabled={!(numberOfMisses === numberOfLives) || playerWon(guessedLetters, answer)}
